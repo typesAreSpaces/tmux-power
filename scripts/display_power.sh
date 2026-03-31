@@ -5,11 +5,6 @@ if [[ $(uname) != 'Darwin' ]]; then
 	exit 0
 fi
 
-tmux_session=$( tmux display-message -p '#S' )
-if [[ $tmux_session != 'fullscreen' && $tmux_session != 'remote' ]]; then
-	exit 0
-fi
-
 power_info=$( pmset -g batt | grep InternalBattery | tail -n 1 )
 
 if [[ -z $power_info ]]; then
@@ -43,10 +38,12 @@ fi
 if [[ $state == "discharging" && $percent -lt 30 ]]; then
 	remaining="$( echo -n "$power_info" | cut -d\; -f3 | cut -f2 -d " " )"
 	if [[ $remaining == "(no" ]]; then
-		remaining=""
+    remaining=""
 	else
-		remaining=" $remaining"
+		remaining="$remaining"
 	fi
 fi
 
-echo "#[fg=colour$battery_colour]$battery_icon$remaining"
+remaining="$percent%"
+
+printf "%s" " #[fg=colour$battery_colour] $remaining $battery_icon"
