@@ -35,15 +35,7 @@ if [[ $percent -eq 100 && $state == "charged" ]]; then
 	battery_icon=''
 fi
 
-if [[ $state == "discharging" && $percent -lt 30 ]]; then
-	remaining="$( echo -n "$power_info" | cut -d\; -f3 | cut -f2 -d " " )"
-	if [[ $remaining == "(no" ]]; then
-    remaining=""
-	else
-		remaining="$remaining"
-	fi
-fi
-
+# Display the percentage consistently, including when no time estimate exists.
 remaining="$percent%"
 
 printf "%s" " #[fg=colour$battery_colour] $remaining $battery_icon"

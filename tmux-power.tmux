@@ -7,7 +7,7 @@ load_interpolation=(
 	)
 
 load_commands=(
-	"#($CURRENT_DIR/scripts/display_power.sh)"
+	"#(\"$CURRENT_DIR/scripts/display_power.sh\")"
 	)
 
 get_tmux_option() {
